@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 
+import com.example.projectundangan.db.TamuHelper;
 import com.example.projectundangan.fragment.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment pageContent = new HomeFragment();
     public static final String KEY_FRAGMENT = "fragment";
+    private TamuHelper tamuHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment, pageContent).commit();
 
         }
+
+        tamuHelper = TamuHelper.getInstance(getApplicationContext());
+        tamuHelper.open();
     }
 
     @Override
