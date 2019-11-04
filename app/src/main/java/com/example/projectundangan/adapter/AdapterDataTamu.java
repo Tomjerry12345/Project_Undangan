@@ -1,80 +1,87 @@
 package com.example.projectundangan.adapter;
 
-import android.app.LauncherActivity;
 import android.content.Context;
-import android.content.Intent;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectundangan.R;
 import com.example.projectundangan.model.Tamu;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
-public class AdapterDataTamu extends RecyclerView.Adapter<AdapterDataTamu.MyAdapterViewHolder> {
-    List<Tamu> listItemsArrayList;
-    Context context;
+public class AdapterDataTamu extends RecyclerView.Adapter<AdapterDataTamu.FavoriteViewHolder> {
 
-    public AdapterDataTamu(List<Tamu> listItemsArrayList , Context context) {
-        this.listItemsArrayList = listItemsArrayList;
+    private ArrayList<Tamu> listTamu = new ArrayList<>();
+    private Context context;
+
+    public AdapterDataTamu(Context context) {
         this.context = context;
+    }
+
+    public ArrayList<Tamu> getListTamu() {
+        return listTamu;
+    }
+
+    public void setListTamu(ArrayList<Tamu> listTamu) {
+        if (listTamu.size() > 0) {
+            this.listTamu.clear();
+        }
+        this.listTamu = listTamu;
     }
 
     @NonNull
     @Override
-    public AdapterDataTamu.MyAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_tamu , parent , false);
-        return new MyAdapterViewHolder(v);
+    public FavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_tamu, viewGroup, false);
+        return new FavoriteViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterDataTamu.MyAdapterViewHolder holder, int position) {
-
-
-        Tamu listItem = listItemsArrayList.get(position);
-        holder.textNama.setText(listItem.getNama());
-        holder.textAlamat.setText(listItem.getAlamat());
-
-        Linkify.addLinks(holder.textNama , Linkify.ALL);
-
+    public void onBindViewHolder(@NonNull FavoriteViewHolder favoriteViewHolder, int i) {
+        final Tamu modelMovie = listTamu.get(i);
+        String nama = modelMovie.getNama();
+        favoriteViewHolder.teksNama.setText(nama);
+//        String alamat = modelMovie.getAlamat();
+//        favoriteViewHolder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent moveDataFilm = new Intent(context, DetailFilm.class);
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_BACKGROUND, modelMovie.getBackdropPath());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_TITLE, modelMovie.getTitle());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_DATE, modelMovie.getReleaseDate());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_POPULARITY, modelMovie.getPopularity());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_RATING, modelMovie.getVoteAverage());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_DESC, modelMovie.getOverview());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_PHOTO, modelMovie.getPosterPath());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_ID, modelMovie.getId());
+//                moveDataFilm.putExtra(DetailFilm.EXTRA_VOTE_COUNT, modelMovie.getVoteCount());
+//
+//                context.startActivity(moveDataFilm);
+//
+//
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
-        return listItemsArrayList.size();
+        return listTamu.size();
     }
 
-    public class MyAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class FavoriteViewHolder extends RecyclerView.ViewHolder {
+        private TextView teksNama;
+//        private TextView txtAlamat;
 
-        TextView textNama , textAlamat;
-        CardView cardView;
-        public MyAdapterViewHolder(final View itemView) {
+        public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
-            textNama = itemView.findViewById(R.id.txtNama);
-            textAlamat = itemView.findViewById(R.id.txtAlamat);
-            cardView = itemView.findViewById(R.id.cardView);
-
-            cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    String alamat = listItemsArrayList.get(getAdapterPosition()).getAlamat();
-
-                    Intent i = new Intent();
-                    i.setAction(Intent.ACTION_SEND);
-                    i.putExtra(Intent.EXTRA_TEXT , alamat);
-                    i.setType("text/plain");
-                    itemView.getContext().startActivity(i);
-                }
-            });
+            teksNama = itemView.findViewById(R.id.txtNama1);
+//            txtAlamat = itemView.findViewById(R.id.txtAlamat);
         }
     }
 }

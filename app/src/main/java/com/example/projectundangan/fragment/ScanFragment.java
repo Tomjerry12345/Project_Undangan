@@ -64,7 +64,7 @@ public class ScanFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode , resultCode , data);
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         String[] data1 = result.toString().split("__");
 
         if (result != null) {
@@ -79,8 +79,12 @@ public class ScanFragment extends Fragment {
                 Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show();
             }
         } else {
-            super.onActivityResult(requestCode ,resultCode ,data);
+            super.onActivityResult(requestCode, resultCode, data);
         }
+
+        Toast.makeText(getActivity(), "Data = " + tamu.getNama(), Toast.LENGTH_SHORT).show();
+
     }
+
 
 }
